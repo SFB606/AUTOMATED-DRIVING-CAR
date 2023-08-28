@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reverse Coordinate Display Example</title>
+</head>
+<body>
+    <div style="position: relative;">
+        <img id="mapImage" src="map 1.png" width="1366" height="768">
+        <canvas id="dotCanvas" width="1366" height="768" style="position: absolute; top: 0; left: 0;"></canvas>
+    </div>
+    <p>Click on the map to place a red dot</p>
+    <p>Coordinates: <span id="coordinates"></span></p>
+
+    <script>
+        const dotCanvas = document.getElementById('dotCanvas');
+        const context = dotCanvas.getContext('2d');
+        const coordinatesSpan = document.getElementById('coordinates');
+        
+        dotCanvas.addEventListener('click', (event) => {
+            const x = event.clientX - dotCanvas.getBoundingClientRect().left;
+            const y = event.clientY - dotCanvas.getBoundingClientRect().top;
+
+            context.clearRect(0, 0, dotCanvas.width, dotCanvas.height); // Clear previous dots
+            context.fillStyle = 'red'; // Set dot color
+            context.beginPath();
+            context.arc(x, y, 5, 0, 2 * Math.PI);
+            context.fill();
+
+            coordinatesSpan.textContent = `X: ${x}, Y: ${y}`;
+        });
+    </script>
+</body>
+</html>
